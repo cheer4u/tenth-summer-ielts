@@ -110,7 +110,15 @@ article p{margin:0 0 1.1em}
 /* modal */
 .modal{position:fixed; inset:0; background:rgba(30,8,20,.45); display:none; align-items:flex-end; justify-content:center; z-index:60}
 .modal.on{display:flex}
-.sheet{background:var(--card); width:min(560px,100%); border-radius:22px 22px 0 0; padding:26px 24px 34px; box-shadow:var(--shadow); animation:up .18s ease}
+.sheet{background:var(--card); width:min(560px,100%); max-height:88vh; overflow-y:auto; border-radius:22px 22px 0 0; padding:26px 24px 34px; box-shadow:var(--shadow); animation:up .18s ease}
+.pos{display:inline-block; background:var(--lav-soft); color:var(--lav); border-radius:6px; padding:1px 9px; font-size:13px; font-family:var(--f-body); font-weight:700; margin-left:8px; vertical-align:2px}
+.wsec{margin-top:18px}
+.wlabel{font-size:12px; letter-spacing:.2em; color:var(--wine); font-weight:700; margin-bottom:7px}
+.chips{display:flex; flex-wrap:wrap; gap:6px}
+.chip{font-family:var(--f-en); font-style:italic; background:var(--soft); border:1px solid var(--line); border-radius:999px; padding:3px 12px; font-size:14px}
+.ex-en{font-family:var(--f-en); font-size:16.5px; line-height:1.7}
+.ex-zh{color:var(--muted); font-size:14.5px; margin-top:3px}
+.src{color:var(--muted); font-size:12px; margin-top:6px; text-align:right}
 @keyframes up{from{transform:translateY(16px); opacity:.6} to{transform:none; opacity:1}}
 .sheet .pw{font-family:var(--f-en); font-style:italic; font-weight:700; font-size:34px; color:var(--wine)}
 .sheet .ipa{font-family:var(--f-ipa); color:var(--muted); margin-top:2px}
@@ -205,9 +213,12 @@ footer{max-width:780px; margin:0 auto; padding:0 18px 40px; color:var(--muted); 
 <div class="modal" id="modal" onclick="if(event.target===this)closeModal()">
   <div class="sheet">
     <div class="pw" id="mWord"></div>
-    <div class="ipa" id="mIpa"></div>
+    <div class="ipa"><span id="mIpa"></span><span class="pos" id="mPos" style="display:none"></span></div>
     <div class="pg" id="mGloss"></div>
-    <div class="ctx" id="mCtx"></div>
+    <div class="wsec" id="mSynSec" style="display:none"><div class="wlabel">同義字</div><div class="chips" id="mSyn"></div></div>
+    <div class="wsec" id="mAntSec" style="display:none"><div class="wlabel">反義字</div><div class="chips" id="mAnt"></div></div>
+    <div class="wsec" id="mExSec" style="display:none"><div class="wlabel">例句</div><div class="ex-en" id="mExEn"></div><div class="ex-zh" id="mExZh"></div></div>
+    <div class="wsec" id="mCtxSec"><div class="wlabel">在故事裡</div><div class="ctx" id="mCtx"></div><div class="src" id="mSrc"></div></div>
     <div class="row">
       <button class="btn" onclick="speakWord()">🔊 發音</button>
       <button class="btn" id="mSave" onclick="toggleSaveFromModal()">☆ 收進生字本</button>
@@ -339,27 +350,69 @@ function fontSize(d){
 }
 
 /* ---------- word popup ---------- */
-function ctxOf(word){
-  for(const p of cur ? cur.paras : []){
+function ctxOf(chObj, word){
+  for(const p of chObj.paras){
     if(p.some(s => s[0] === 1 && s[1] === word))
       return p.map(s => s[0] === 0 ? esc(s[1]) : (s[1] === word ? '<b>' + esc(s[1]) + '（' + esc(s[2]) + '）</b>' : esc(s[1]) + '（' + esc(s[2]) + '）')).join('');
   }
   return '';
 }
+const POS_ABBR = { noun:'n.', verb:'v.', adjective:'adj.', adverb:'adv.', preposition:'prep.', conjunction:'conj.', pronoun:'pron.', interjection:'int.', exclamation:'int.', determiner:'det.' };
+const exZhCache = {};
+function uniqCap(arr, cap){ const out = []; for(const x of arr){ if(x && !out.includes(x)) out.push(x); if(out.length >= cap) break; } return out; }
 function openWord(el){
   const w = el.dataset.w, g = el.dataset.g;
-  modalWord = { w, g, ch: cur ? cur.n : (todayChapter().n) };
+  const chObj = cur || todayChapter();
+  modalWord = { w, g, ch: chObj.n };
   $('#mWord').textContent = w;
   $('#mGloss').textContent = g;
   $('#mIpa').textContent = '音標載入中…';
-  $('#mCtx').innerHTML = cur ? ctxOf(w) : '';
-  $('#mCtx').style.display = cur ? 'block' : 'none';
+  $('#mPos').style.display = 'none';
+  ['mSynSec','mAntSec','mExSec'].forEach(id => $('#'+id).style.display = 'none');
+  $('#mCtx').innerHTML = ctxOf(chObj, w);
+  $('#mSrc').textContent = '《第十個夏天》・第 ' + chObj.n + ' 章〈' + chObj.t + '〉';
   updateSaveBtn();
   $('#modal').classList.add('on');
+  const still = () => modalWord && modalWord.w === w;
   fetch('https://api.dictionaryapi.dev/api/v2/entries/en/' + encodeURIComponent(w))
     .then(r => r.json())
-    .then(j => { const ph = j && j[0] && j[0].phonetic; $('#mIpa').textContent = ph || ''; })
-    .catch(() => { $('#mIpa').textContent = ''; });
+    .then(j => {
+      if(!still() || !j || !j[0]) { if(still()) $('#mIpa').textContent = ''; return; }
+      const e = j[0];
+      const ph = e.phonetic || (e.phonetics || []).map(p => p.text).find(Boolean) || '';
+      $('#mIpa').textContent = ph;
+      const meanings = e.meanings || [];
+      let mi = meanings.findIndex(mn => (mn.definitions || []).some(df => df.example));
+      if(mi < 0) mi = 0;
+      const pos = meanings[mi] && POS_ABBR[meanings[mi].partOfSpeech];
+      if(pos){ $('#mPos').textContent = pos; $('#mPos').style.display = 'inline-block'; }
+      const syns = [], ants = [];
+      meanings.forEach(mn => {
+        syns.push(...(mn.synonyms || [])); ants.push(...(mn.antonyms || []));
+        (mn.definitions || []).forEach(df => { syns.push(...(df.synonyms || [])); ants.push(...(df.antonyms || [])); });
+      });
+      const S = uniqCap(syns.filter(x => x.toLowerCase() !== w.toLowerCase()), 6);
+      const A = uniqCap(ants.filter(x => x.toLowerCase() !== w.toLowerCase()), 4);
+      if(S.length){ $('#mSyn').innerHTML = S.map(x => '<span class="chip">' + esc(x) + '</span>').join(''); $('#mSynSec').style.display = 'block'; }
+      if(A.length){ $('#mAnt').innerHTML = A.map(x => '<span class="chip">' + esc(x) + '</span>').join(''); $('#mAntSec').style.display = 'block'; }
+      let example = '';
+      for(const mn of meanings){ for(const df of (mn.definitions || [])){ if(df.example){ example = df.example; break; } } if(example) break; }
+      if(example){
+        $('#mExEn').textContent = example;
+        $('#mExZh').textContent = '';
+        $('#mExSec').style.display = 'block';
+        if(exZhCache[example]){ $('#mExZh').textContent = exZhCache[example]; }
+        else{
+          fetch('https://api.mymemory.translated.net/get?q=' + encodeURIComponent(example) + '&langpair=en|zh-TW')
+            .then(r => r.json())
+            .then(t => {
+              const zh = t && t.responseData && t.responseData.translatedText;
+              if(zh){ exZhCache[example] = zh; if(still() && $('#mExEn').textContent === example) $('#mExZh').textContent = zh; }
+            }).catch(() => {});
+        }
+      }
+    })
+    .catch(() => { if(still()) $('#mIpa').textContent = ''; });
 }
 function updateSaveBtn(){ $('#mSave').textContent = isSaved(modalWord.w) ? '★ 已在生字本' : '☆ 收進生字本'; }
 function toggleSaveFromModal(){
