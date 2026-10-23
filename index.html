@@ -228,6 +228,7 @@ footer{max-width:780px; margin:0 auto; padding:0 18px 40px; color:var(--muted); 
 </div>
 
 <script src="data.js"></script>
+<script src="dict.js"></script>
 <script>
 const $ = s => document.querySelector(s);
 const store = {
@@ -360,6 +361,27 @@ function ctxOf(chObj, word){
 const POS_ABBR = { noun:'n.', verb:'v.', adjective:'adj.', adverb:'adv.', preposition:'prep.', conjunction:'conj.', pronoun:'pron.', interjection:'int.', exclamation:'int.', determiner:'det.' };
 const exZhCache = {};
 function uniqCap(arr, cap){ const out = []; for(const x of arr){ if(x && !out.includes(x)) out.push(x); if(out.length >= cap) break; } return out; }
+function applyExampleZh(example, w){
+  if(exZhCache[example]){ $('#mExZh').textContent = exZhCache[example]; return; }
+  fetch('https://api.mymemory.translated.net/get?q=' + encodeURIComponent(example) + '&langpair=en|zh-TW')
+    .then(r => r.json())
+    .then(t => {
+      const zh = t && t.responseData && t.responseData.translatedText;
+      if(zh){ exZhCache[example] = zh; if(modalWord && modalWord.w === w && $('#mExEn').textContent === example) $('#mExZh').textContent = zh; }
+    }).catch(() => {});
+}
+function applyDict(w, ipa, pos, syn, ant, ex, exzh){
+  $('#mIpa').textContent = ipa || '';
+  if(pos){ $('#mPos').textContent = pos; $('#mPos').style.display = 'inline-block'; }
+  if(syn && syn.length){ $('#mSyn').innerHTML = syn.map(x => '<span class="chip">' + esc(x) + '</span>').join(''); $('#mSynSec').style.display = 'block'; }
+  if(ant && ant.length){ $('#mAnt').innerHTML = ant.map(x => '<span class="chip">' + esc(x) + '</span>').join(''); $('#mAntSec').style.display = 'block'; }
+  if(ex){
+    $('#mExEn').textContent = ex;
+    $('#mExZh').textContent = exzh || '';
+    $('#mExSec').style.display = 'block';
+    if(!exzh) applyExampleZh(ex, w);
+  }
+}
 function openWord(el){
   const w = el.dataset.w, g = el.dataset.g;
   const chObj = cur || todayChapter();
@@ -373,6 +395,11 @@ function openWord(el){
   $('#mSrc').textContent = '《第十個夏天》・第 ' + chObj.n + ' 章〈' + chObj.t + '〉';
   updateSaveBtn();
   $('#modal').classList.add('on');
+  const D = (window.DICT || {})[w] || (window.DICT || {})[w.toLowerCase()];
+  if(D){
+    applyDict(w, D[0] || '', D[1] || '', D[2] ? D[2].split(',') : [], D[3] ? D[3].split(',') : [], D[4] || '', D[5] || '');
+    return;
+  }
   const still = () => modalWord && modalWord.w === w;
   fetch('https://api.dictionaryapi.dev/api/v2/entries/en/' + encodeURIComponent(w))
     .then(r => r.json())
@@ -380,12 +407,10 @@ function openWord(el){
       if(!still() || !j || !j[0]) { if(still()) $('#mIpa').textContent = ''; return; }
       const e = j[0];
       const ph = e.phonetic || (e.phonetics || []).map(p => p.text).find(Boolean) || '';
-      $('#mIpa').textContent = ph;
       const meanings = e.meanings || [];
       let mi = meanings.findIndex(mn => (mn.definitions || []).some(df => df.example));
       if(mi < 0) mi = 0;
-      const pos = meanings[mi] && POS_ABBR[meanings[mi].partOfSpeech];
-      if(pos){ $('#mPos').textContent = pos; $('#mPos').style.display = 'inline-block'; }
+      const pos = (meanings[mi] && POS_ABBR[meanings[mi].partOfSpeech]) || '';
       const syns = [], ants = [];
       meanings.forEach(mn => {
         syns.push(...(mn.synonyms || [])); ants.push(...(mn.antonyms || []));
@@ -393,24 +418,9 @@ function openWord(el){
       });
       const S = uniqCap(syns.filter(x => x.toLowerCase() !== w.toLowerCase()), 6);
       const A = uniqCap(ants.filter(x => x.toLowerCase() !== w.toLowerCase()), 4);
-      if(S.length){ $('#mSyn').innerHTML = S.map(x => '<span class="chip">' + esc(x) + '</span>').join(''); $('#mSynSec').style.display = 'block'; }
-      if(A.length){ $('#mAnt').innerHTML = A.map(x => '<span class="chip">' + esc(x) + '</span>').join(''); $('#mAntSec').style.display = 'block'; }
       let example = '';
       for(const mn of meanings){ for(const df of (mn.definitions || [])){ if(df.example){ example = df.example; break; } } if(example) break; }
-      if(example){
-        $('#mExEn').textContent = example;
-        $('#mExZh').textContent = '';
-        $('#mExSec').style.display = 'block';
-        if(exZhCache[example]){ $('#mExZh').textContent = exZhCache[example]; }
-        else{
-          fetch('https://api.mymemory.translated.net/get?q=' + encodeURIComponent(example) + '&langpair=en|zh-TW')
-            .then(r => r.json())
-            .then(t => {
-              const zh = t && t.responseData && t.responseData.translatedText;
-              if(zh){ exZhCache[example] = zh; if(still() && $('#mExEn').textContent === example) $('#mExZh').textContent = zh; }
-            }).catch(() => {});
-        }
-      }
+      if(still()) applyDict(w, ph, pos, S, A, example, '');
     })
     .catch(() => { if(still()) $('#mIpa').textContent = ''; });
 }
