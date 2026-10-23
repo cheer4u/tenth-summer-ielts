@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>第十個夏天・雅思單字 BL 小說</title>
+<meta name="description" content="看原創 BL 小說《第十個夏天》，不知不覺背完 9,000+ 雅思單字。校園同桌 → 十年重逢 → 破鏡重圓，100 章，每章附學習版與複習版。">
+<link rel="icon" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#C2437B">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,500;0,700;1,500&family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@600;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#FBF6F9; --card:#FFFFFF; --ink:#35222E; --muted:#7E6875; --line:#F0DFEA;
+  --wine:#C2437B; --wine-ink:#FFFFFF; --mark:#F9DCE9; --mark-ink:#93255A; --soft:#F8EDF3;
+  --lav:#8E7CC3; --lav-soft:#EFEAF9; --ok:#2F7A5B;
+  --shadow:0 10px 30px rgba(120,40,80,.12);
+  --f-display:"Noto Serif TC","Songti TC",serif;
+  --f-body:"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+  --f-en:"Newsreader",Georgia,serif;
+  --f-ipa:"Noto Sans","Segoe UI",system-ui,sans-serif;
+  --read-size:18px;
+}
+[data-theme="dark"]{
+  --paper:#171118; --card:#211722; --ink:#F3E7EF; --muted:#AC99A6; --line:#332631;
+  --wine:#E58BAC; --wine-ink:#22101A; --mark:#472434; --mark-ink:#F3B9D2; --soft:#291B26;
+  --lav:#B7A6E3; --lav-soft:#2A2138; --shadow:0 10px 30px rgba(0,0,0,.45);
+}
+*{box-sizing:border-box; -webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{margin:0; background:var(--paper); color:var(--ink); font-family:var(--f-body); line-height:1.6}
+a{color:var(--wine)}
+header{position:sticky; top:0; z-index:40; backdrop-filter:blur(10px); background:color-mix(in srgb, var(--paper) 86%, transparent); border-bottom:1px solid var(--line)}
+.hwrap{max-width:780px; margin:0 auto; padding:10px 18px; display:flex; align-items:center; gap:10px}
+.brand{font-family:var(--f-display); font-weight:900; font-size:20px; cursor:pointer; white-space:nowrap}
+.brand small{display:block; font-family:var(--f-body); font-weight:500; font-size:11px; color:var(--muted); letter-spacing:.14em}
+nav{margin-left:auto; display:flex; gap:6px; align-items:center}
+nav button{background:none; border:0; font:inherit; font-size:15px; color:var(--ink); padding:8px 10px; border-radius:999px; cursor:pointer}
+nav button.on{background:var(--soft); color:var(--wine); font-weight:700}
+.badge{background:var(--wine); color:var(--wine-ink); border-radius:999px; font-size:11px; padding:1px 7px; margin-left:2px; vertical-align:2px}
+main{max-width:780px; margin:0 auto; padding:22px 18px 80px}
+.view{display:none} .view.on{display:block}
+.hero h1{font-family:var(--f-display); font-weight:900; font-size:34px; line-height:1.35; margin:10px 0 6px}
+.hero h1 em{font-style:normal; color:var(--wine); background:linear-gradient(transparent 62%, var(--mark) 62%)}
+.hero p{color:var(--muted); font-size:16px; margin:6px 0 0}
+.kicker{color:var(--wine); font-weight:700; letter-spacing:.22em; font-size:12px}
+.card{background:var(--card); border:1px solid var(--line); border-radius:20px; box-shadow:var(--shadow); padding:22px}
+.today{margin-top:26px; border-top:5px solid transparent; border-image:linear-gradient(90deg,#F093B8,var(--lav)) 1; cursor:pointer}
+.today .day{color:var(--wine); font-weight:700; letter-spacing:.18em; font-size:12px}
+.today h2{font-family:var(--f-display); font-size:26px; margin:6px 0 2px}
+.today .meta{color:var(--muted); font-size:14px}
+.today .sample{margin-top:14px; background:var(--soft); border-radius:14px; padding:14px 16px; font-size:16px; line-height:1.9}
+.today .hint{color:var(--muted); font-size:13px; margin-top:10px}
+.stats{display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-top:18px}
+.stat{background:var(--card); border:1px solid var(--line); border-radius:16px; padding:14px 8px; text-align:center}
+.stat b{display:block; font-size:24px; font-family:var(--f-en); color:var(--wine)}
+.stat span{font-size:12px; color:var(--muted)}
+.steps{margin-top:34px}
+.steps h3, .sec-title{font-family:var(--f-display); font-size:22px; margin:0 0 14px}
+.step{display:flex; gap:14px; padding:14px 0; border-top:1px dashed var(--line)}
+.step .no{flex:0 0 34px; height:34px; border-radius:50%; background:linear-gradient(135deg,#F093B8,var(--lav)); color:#fff; font-weight:700; display:flex; align-items:center; justify-content:center}
+.step h4{margin:2px 0 4px; font-size:16px}
+.step p{margin:0; color:var(--muted); font-size:14px}
+.tip{margin-top:22px; color:var(--muted); font-size:13px; background:var(--lav-soft); border-radius:14px; padding:12px 16px}
+/* reader */
+.rhead .story{color:var(--wine); font-weight:700; letter-spacing:.2em; font-size:12px}
+.rhead h2{font-family:var(--f-display); font-size:30px; margin:6px 0 4px}
+.rhead .meta{color:var(--muted); font-size:14px}
+.toggle{display:inline-flex; background:var(--soft); border-radius:999px; padding:4px; margin:18px 0 6px}
+.toggle button{border:0; background:none; font:inherit; font-weight:700; padding:8px 18px; border-radius:999px; cursor:pointer; color:var(--muted)}
+.toggle button.on{background:var(--wine); color:var(--wine-ink)}
+.tools{float:right; margin-top:18px; display:flex; gap:6px}
+.tools button{border:1px solid var(--line); background:var(--card); color:var(--ink); border-radius:999px; font:inherit; font-size:13px; padding:7px 12px; cursor:pointer}
+article{font-size:var(--read-size); line-height:2.05; font-family:var(--f-display); font-weight:600}
+article p{margin:0 0 1.1em}
+.w{font-family:var(--f-en); font-weight:700; font-style:italic; color:var(--mark-ink); background:var(--mark); border-radius:4px; padding:0 3px; cursor:pointer; white-space:nowrap}
+.g{color:var(--muted); font-size:.82em; font-family:var(--f-body); font-weight:400}
+.blank{display:inline-block; min-width:52px; text-align:center; background:var(--soft); border:1px dashed var(--lav); color:transparent; border-radius:6px; cursor:pointer; font-size:.8em; font-family:var(--f-body); padding:0 6px; user-select:none}
+.blank.revealed{background:var(--mark); color:var(--mark-ink); border-style:solid; border-color:transparent}
+.vocab{margin-top:36px}
+.vocab table{width:100%; border-collapse:collapse; font-size:15px}
+.vocab th{text-align:left; color:var(--muted); font-weight:500; border-bottom:2px solid var(--line); padding:8px 6px}
+.vocab td{border-bottom:1px solid var(--line); padding:8px 6px; vertical-align:top}
+.vocab .vw{font-family:var(--f-en); font-weight:700; font-style:italic}
+.vocab .star{border:0; background:none; cursor:pointer; font-size:17px; color:var(--lav); padding:0 2px}
+.vocab .star.saved{color:var(--wine)}
+.vcover{display:inline-block; min-width:64px; background:var(--soft); border:1px dashed var(--lav); color:transparent; border-radius:6px; cursor:pointer; padding:0 8px; user-select:none}
+.vcover.revealed{background:var(--mark); color:var(--mark-ink); border-color:transparent}
+.actions{display:flex; gap:10px; margin-top:30px; flex-wrap:wrap}
+.btn{border:1px solid var(--line); background:var(--card); color:var(--ink); font:inherit; font-weight:700; padding:12px 20px; border-radius:999px; cursor:pointer}
+.btn.primary{background:var(--wine); color:var(--wine-ink); border-color:transparent}
+.btn.done{background:var(--ok); color:#fff; border-color:transparent}
+/* catalog */
+.grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:12px}
+.chip-card{background:var(--card); border:1px solid var(--line); border-radius:16px; padding:16px; cursor:pointer; position:relative}
+.chip-card:hover{border-color:var(--wine)}
+.chip-card .n{font-family:var(--f-en); color:var(--wine); font-weight:700; font-size:13px; letter-spacing:.1em}
+.chip-card .t{font-family:var(--f-display); font-weight:900; font-size:18px; margin:4px 0}
+.chip-card .m{color:var(--muted); font-size:12px}
+.chip-card .read{position:absolute; top:12px; right:12px; color:var(--ok); font-size:14px}
+/* words */
+.wrow{display:flex; align-items:baseline; gap:10px; padding:12px 4px; border-bottom:1px solid var(--line)}
+.wrow .ww{font-family:var(--f-en); font-style:italic; font-weight:700; font-size:18px}
+.wrow .wg{color:var(--muted)}
+.wrow .wch{margin-left:auto; color:var(--muted); font-size:12px; white-space:nowrap}
+.wrow .del{border:0; background:none; color:var(--muted); cursor:pointer; font-size:16px}
+.empty{color:var(--muted); text-align:center; padding:40px 0}
+/* modal */
+.modal{position:fixed; inset:0; background:rgba(30,8,20,.45); display:none; align-items:flex-end; justify-content:center; z-index:60}
+.modal.on{display:flex}
+.sheet{background:var(--card); width:min(560px,100%); border-radius:22px 22px 0 0; padding:26px 24px 34px; box-shadow:var(--shadow); animation:up .18s ease}
+@keyframes up{from{transform:translateY(16px); opacity:.6} to{transform:none; opacity:1}}
+.sheet .pw{font-family:var(--f-en); font-style:italic; font-weight:700; font-size:34px; color:var(--wine)}
+.sheet .ipa{font-family:var(--f-ipa); color:var(--muted); margin-top:2px}
+.sheet .pg{font-size:19px; margin-top:10px}
+.sheet .ctx{margin-top:14px; background:var(--soft); border-radius:12px; padding:12px 14px; font-size:14px; line-height:1.9; color:var(--muted)}
+.sheet .ctx b{color:var(--mark-ink)}
+.sheet .row{display:flex; gap:10px; margin-top:18px}
+footer{max-width:780px; margin:0 auto; padding:0 18px 40px; color:var(--muted); font-size:12px; text-align:center}
+@media (max-width:560px){ .stats{grid-template-columns:repeat(2,1fr)} .hero h1{font-size:28px} .tools{float:none; margin-top:10px} }
+</style>
+</head>
+<body>
+<header>
+  <div class="hwrap">
+    <div class="brand" onclick="go('home')">第十個夏天<small>IELTS ・ BL 小說學單字</small></div>
+    <nav>
+      <button id="nav-catalog" onclick="go('catalog')">課表</button>
+      <button id="nav-words" onclick="go('words')">生字本<span class="badge" id="wordCount">0</span></button>
+      <button id="themeBtn" onclick="toggleTheme()" title="深色模式">🌙</button>
+    </nav>
+  </div>
+</header>
+<main>
+  <!-- HOME -->
+  <section class="view" id="view-home">
+    <div class="hero">
+      <div class="kicker">霸總教你背單字 ・ 同門姊妹作</div>
+      <h1>看 BL 小說，<em>不知不覺</em>背雅思單字</h1>
+      <p>原創 BL 長篇《第十個夏天》：校園同桌 → 十年重逢 → 破鏡重圓。100 章狗血又上頭的劇情裡，藏著 9,000 多個雅思單字，每天一章，讀著讀著就記住了。</p>
+    </div>
+    <div class="card today" id="todayCard"></div>
+    <div class="stats">
+      <div class="stat"><b id="stChapters">100</b><span>篇故事</span></div>
+      <div class="stat"><b id="stWords">0</b><span>個單字</span></div>
+      <div class="stat"><b id="stRead">0</b><span>篇已讀完</span></div>
+      <div class="stat"><b id="stDays">0</b><span>學習天數</span></div>
+    </div>
+    <div class="steps">
+      <h3>怎麼用</h3>
+      <div class="step"><div class="no">1</div><div><h4>每天一章，追更式背詞</h4><p>打開就會跳出今天要讀的那一章。林既白和顧淮序的故事會推著你往下讀，單字只是順便。</p></div></div>
+      <div class="step"><div class="no">2</div><div><h4>進入學習版，邊讀邊點</h4><p>學習版的單字旁有中文。點一下畫線的英文字，跳出音標、發音和它所在的句子，還能一鍵收進生字本。</p></div></div>
+      <div class="step"><div class="no">3</div><div><h4>讀完挑戰複習版</h4><p>複習版會把中文遮住，先自己回想，再點灰色框對答案。章末詞彙表也可以這樣自測。</p></div></div>
+      <div class="step"><div class="no">4</div><div><h4>標記已讀，累積進度</h4><p>讀完按「標記為已讀」，記錄學習天數。記不住的字按 ☆ 收進「生字本」，考前集中複習。</p></div></div>
+    </div>
+    <div class="tip">小提醒：用手機瀏覽器的「加入主畫面」，就能像 App 一樣一鍵打開。閱讀進度與生字本只存在你這支手機的瀏覽器裡。</div>
+  </section>
+
+  <!-- CATALOG -->
+  <section class="view" id="view-catalog">
+    <h3 class="sec-title">課表 ・ 全 100 章</h3>
+    <div class="grid" id="catalogGrid"></div>
+  </section>
+
+  <!-- READER -->
+  <section class="view" id="view-reader">
+    <button class="btn" onclick="go('catalog')">← 回課表</button>
+    <div class="rhead" style="margin-top:16px">
+      <div class="story" id="rStory">STORY 01</div>
+      <h2 id="rTitle"></h2>
+      <div class="meta" id="rMeta"></div>
+    </div>
+    <div class="tools">
+      <button onclick="fontSize(-1)">A−</button>
+      <button onclick="fontSize(1)">A＋</button>
+    </div>
+    <div class="toggle">
+      <button id="step1Btn" class="on" onclick="setStep(1)">學習版 Step1</button>
+      <button id="step2Btn" onclick="setStep(2)">複習版 Step2</button>
+    </div>
+    <div id="stepHint" style="color:var(--muted); font-size:13px; margin-bottom:14px"></div>
+    <article id="rBody"></article>
+    <div class="vocab">
+      <h3 class="sec-title" id="vTitle">本章詞彙表</h3>
+      <table><thead><tr><th style="width:44px">#</th><th>單字</th><th>中文</th><th style="width:40px"></th></tr></thead><tbody id="vBody"></tbody></table>
+    </div>
+    <div class="actions">
+      <button class="btn" id="prevBtn">← 上一章</button>
+      <button class="btn primary" id="readBtn" onclick="toggleRead()">標記為已讀</button>
+      <button class="btn" id="nextBtn">下一章 →</button>
+    </div>
+  </section>
+
+  <!-- WORDS -->
+  <section class="view" id="view-words">
+    <h3 class="sec-title">生字本</h3>
+    <div id="wordList"></div>
+  </section>
+</main>
+<footer>《第十個夏天》・ 現代 BL 原創小說 × 雅思單字 ｜ 學習版 Step1：在語境中背單詞 ・ 複習版 Step2：看單詞回憶詞義</footer>
+
+<!-- WORD POPUP -->
+<div class="modal" id="modal" onclick="if(event.target===this)closeModal()">
+  <div class="sheet">
+    <div class="pw" id="mWord"></div>
+    <div class="ipa" id="mIpa"></div>
+    <div class="pg" id="mGloss"></div>
+    <div class="ctx" id="mCtx"></div>
+    <div class="row">
+      <button class="btn" onclick="speakWord()">🔊 發音</button>
+      <button class="btn" id="mSave" onclick="toggleSaveFromModal()">☆ 收進生字本</button>
+      <button class="btn primary" onclick="closeModal()">關閉</button>
+    </div>
+  </div>
+</div>
+
+<script src="data.js"></script>
+<script>
+const $ = s => document.querySelector(s);
+const store = {
+  get(k, d){ try{ const v = localStorage.getItem('ts_'+k); return v ? JSON.parse(v) : d; }catch(e){ return d; } },
+  set(k, v){ try{ localStorage.setItem('ts_'+k, JSON.stringify(v)); }catch(e){} }
+};
+let readSet = new Set(store.get('read', []));
+let savedWords = store.get('words', []);       // [{w,g,ch}]
+let daySet = new Set(store.get('days', []));
+let cur = null, curStep = 1, modalWord = null;
+
+function todayStr(){ const d = new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+function recordDay(){ const t = todayStr(); if(!daySet.has(t)){ daySet.add(t); store.set('days', [...daySet]); } }
+function fmt(n){ return n.toLocaleString('en-US'); }
+function esc(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function isSaved(w){ return savedWords.some(x => x.w === w); }
+function persistWords(){ store.set('words', savedWords); $('#wordCount').textContent = savedWords.length; }
+
+function go(view, arg){
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('on'));
+  $('#view-'+view).classList.add('on');
+  $('#nav-catalog').classList.toggle('on', view === 'catalog');
+  $('#nav-words').classList.toggle('on', view === 'words');
+  if(view === 'home') renderHome();
+  if(view === 'catalog') renderCatalog();
+  if(view === 'words') renderWords();
+  if(view === 'reader' && arg) openChapter(arg);
+  window.scrollTo(0, 0);
+  history.replaceState(null, '', view === 'reader' && arg ? '#/read/'+arg : '#/'+view);
+}
+
+/* ---------- home ---------- */
+function paraPlain(segs){ return segs.map(s => s[0] === 0 ? s[1] : s[1] + '（' + s[2] + '）').join(''); }
+function renderSegs(segs, step){
+  return segs.map(s => {
+    if(s[0] === 0) return esc(s[1]);
+    if(step === 1) return '<span class="w" onclick="openWord(this)" data-w="'+esc(s[1])+'" data-g="'+esc(s[2])+'">'+esc(s[1])+'</span><span class="g">（'+esc(s[2])+'）</span>';
+    return '<span class="w" onclick="openWord(this)" data-w="'+esc(s[1])+'" data-g="'+esc(s[2])+'">'+esc(s[1])+'</span><span class="blank" onclick="this.classList.toggle(\'revealed\'); this.textContent = this.classList.contains(\'revealed\') ? \'（'+esc(s[2])+'）\' : \'（　）\'">（　）</span>';
+  }).join('');
+}
+function todayChapter(){
+  for(const c of BOOK.chapters) if(!readSet.has(c.n)) return c;
+  return BOOK.chapters[(Math.floor(Date.now()/86400000) % 100)];
+}
+function renderHome(){
+  $('#stChapters').textContent = BOOK.chapters.length;
+  $('#stWords').textContent = fmt(BOOK.totalWords);
+  $('#stRead').textContent = readSet.size;
+  $('#stDays').textContent = daySet.size;
+  persistWords();
+  const c = todayChapter();
+  const sample = c.paras[0];
+  $('#todayCard').innerHTML =
+    '<div class="day">STORY ' + String(c.n).padStart(2,'0') + ' ・ 今日課程</div>' +
+    '<h2>' + esc(c.t) + '</h2>' +
+    '<div class="meta">' + c.wc + ' 個單字 ・ 約 ' + c.mins + ' 分鐘</div>' +
+    '<div class="sample">' + renderSegs(sample, 1) + '</div>' +
+    '<div class="hint">試試看，點一下畫線的英文字；點卡片任意處進入這一章 →</div>';
+  $('#todayCard').onclick = e => { if(!e.target.classList.contains('w')) openChapter(c.n); go('reader'); };
+}
+
+/* ---------- catalog ---------- */
+function renderCatalog(){
+  $('#catalogGrid').innerHTML = BOOK.chapters.map(c =>
+    '<div class="chip-card" onclick="go(\'reader\',' + c.n + ')">' +
+    (readSet.has(c.n) ? '<div class="read">✓</div>' : '') +
+    '<div class="n">STORY ' + String(c.n).padStart(2,'0') + '</div>' +
+    '<div class="t">' + esc(c.t) + '</div>' +
+    '<div class="m">' + c.wc + ' 個單字 ・ 約 ' + c.mins + ' 分鐘</div></div>'
+  ).join('');
+}
+
+/* ---------- reader ---------- */
+function openChapter(n){
+  cur = BOOK.chapters[n-1]; curStep = 1;
+  recordDay();
+  $('#rStory').textContent = 'STORY ' + String(n).padStart(2,'0') + ' ・ 第 ' + n + ' 章';
+  $('#rTitle').textContent = cur.t;
+  $('#rMeta').textContent = cur.wc + ' 個單字 ・ 約 ' + cur.mins + ' 分鐘';
+  $('#prevBtn').style.visibility = n > 1 ? 'visible' : 'hidden';
+  $('#nextBtn').style.visibility = n < 100 ? 'visible' : 'hidden';
+  $('#prevBtn').onclick = () => openChapter(n-1);
+  $('#nextBtn').onclick = () => openChapter(n+1);
+  renderReader();
+}
+function renderReader(){
+  $('#step1Btn').classList.toggle('on', curStep === 1);
+  $('#step2Btn').classList.toggle('on', curStep === 2);
+  $('#stepHint').textContent = curStep === 1
+    ? 'Step1：在語境中背單詞——點畫線單字看音標、發音與例句。'
+    : 'Step2：看單詞回憶詞義——先自己想，再點灰色框對答案。';
+  $('#rBody').innerHTML = cur.paras.map(p => '<p>' + renderSegs(p, curStep) + '</p>').join('');
+  $('#vTitle').textContent = '本章詞彙表 ・ ' + cur.vocab.length + ' 詞';
+  $('#vBody').innerHTML = cur.vocab.map((v, i) =>
+    '<tr><td>' + (i+1) + '</td>' +
+    '<td class="vw">' + esc(v[0]) + '</td>' +
+    '<td>' + (curStep === 1 ? esc(v[1]) : '<span class="vcover" onclick="this.classList.toggle(\'revealed\'); this.textContent = this.classList.contains(\'revealed\') ? \'' + esc(v[1]) + '\' : \'　　　\'">　　　</span>') + '</td>' +
+    '<td><button class="star' + (isSaved(v[0]) ? ' saved' : '') + '" onclick="toggleSave(\'' + esc(v[0]) + '\',\'' + esc(v[1]) + '\',' + cur.n + ',this)">' + (isSaved(v[0]) ? '★' : '☆') + '</button></td></tr>'
+  ).join('');
+  updateReadBtn();
+}
+function setStep(s){ curStep = s; renderReader(); window.scrollTo(0, 0); }
+function updateReadBtn(){
+  const b = $('#readBtn'), done = readSet.has(cur.n);
+  b.textContent = done ? '✓ 已讀完' : '標記為已讀';
+  b.classList.toggle('done', done);
+  b.classList.toggle('primary', !done);
+}
+function toggleRead(){
+  if(readSet.has(cur.n)) readSet.delete(cur.n); else { readSet.add(cur.n); recordDay(); }
+  store.set('read', [...readSet]);
+  updateReadBtn();
+}
+function fontSize(d){
+  const r = document.documentElement;
+  let v = parseFloat(getComputedStyle(r).getPropertyValue('--read-size')) || 18;
+  v = Math.min(24, Math.max(15, v + d));
+  r.style.setProperty('--read-size', v + 'px');
+  store.set('fs', v);
+}
+
+/* ---------- word popup ---------- */
+function ctxOf(word){
+  for(const p of cur ? cur.paras : []){
+    if(p.some(s => s[0] === 1 && s[1] === word))
+      return p.map(s => s[0] === 0 ? esc(s[1]) : (s[1] === word ? '<b>' + esc(s[1]) + '（' + esc(s[2]) + '）</b>' : esc(s[1]) + '（' + esc(s[2]) + '）')).join('');
+  }
+  return '';
+}
+function openWord(el){
+  const w = el.dataset.w, g = el.dataset.g;
+  modalWord = { w, g, ch: cur ? cur.n : (todayChapter().n) };
+  $('#mWord').textContent = w;
+  $('#mGloss').textContent = g;
+  $('#mIpa').textContent = '音標載入中…';
+  $('#mCtx').innerHTML = cur ? ctxOf(w) : '';
+  $('#mCtx').style.display = cur ? 'block' : 'none';
+  updateSaveBtn();
+  $('#modal').classList.add('on');
+  fetch('https://api.dictionaryapi.dev/api/v2/entries/en/' + encodeURIComponent(w))
+    .then(r => r.json())
+    .then(j => { const ph = j && j[0] && j[0].phonetic; $('#mIpa').textContent = ph || ''; })
+    .catch(() => { $('#mIpa').textContent = ''; });
+}
+function updateSaveBtn(){ $('#mSave').textContent = isSaved(modalWord.w) ? '★ 已在生字本' : '☆ 收進生字本'; }
+function toggleSaveFromModal(){
+  toggleSave(modalWord.w, modalWord.g, modalWord.ch, null);
+  updateSaveBtn();
+  if(cur) renderReader();
+}
+function speakWord(){
+  if(!modalWord) return;
+  const u = new SpeechSynthesisUtterance(modalWord.w);
+  u.lang = 'en-US'; u.rate = 0.92;
+  speechSynthesis.cancel(); speechSynthesis.speak(u);
+}
+function closeModal(){ $('#modal').classList.remove('on'); }
+
+/* ---------- saved words ---------- */
+function toggleSave(w, g, ch, btn){
+  const i = savedWords.findIndex(x => x.w === w);
+  if(i >= 0) savedWords.splice(i, 1); else savedWords.push({ w, g, ch });
+  persistWords();
+  if(btn){ const s = isSaved(w); btn.textContent = s ? '★' : '☆'; btn.classList.toggle('saved', s); }
+}
+function renderWords(){
+  $('#wordList').innerHTML = savedWords.length
+    ? savedWords.map((x, i) =>
+        '<div class="wrow"><span class="ww">' + esc(x.w) + '</span><span class="wg">' + esc(x.g) + '</span>' +
+        '<span class="wch">第 ' + x.ch + ' 章</span>' +
+        '<button class="del" onclick="savedWords.splice(' + i + ',1); persistWords(); renderWords();">✕</button></div>').join('')
+    : '<div class="empty">還沒有生字。讀故事時點單字，或在詞彙表按 ☆，就能把單字收進來。</div>';
+}
+
+/* ---------- theme / init ---------- */
+function toggleTheme(){
+  const dark = document.documentElement.dataset.theme !== 'dark';
+  document.documentElement.dataset.theme = dark ? 'dark' : '';
+  $('#themeBtn').textContent = dark ? '☀️' : '🌙';
+  store.set('theme', dark ? 'dark' : 'light');
+}
+(function init(){
+  if(store.get('theme', 'light') === 'dark'){ document.documentElement.dataset.theme = 'dark'; $('#themeBtn').textContent = '☀️'; }
+  const fs = store.get('fs', 0); if(fs) document.documentElement.style.setProperty('--read-size', fs + 'px');
+  persistWords();
+  const h = location.hash;
+  const m = h.match(/#\/read\/(\d+)/);
+  if(m) { go('reader', parseInt(m[1], 10)); }
+  else if(h === '#/catalog') go('catalog');
+  else if(h === '#/words') go('words');
+  else go('home');
+})();
+</script>
+</body>
+</html>
